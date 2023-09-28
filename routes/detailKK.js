@@ -6,7 +6,7 @@ const connect = require("../config/db.js");
 // route get all
 router.get("/", (req, res) => {
   connect.query(
-    "SELECT * FROM detail_kk INNER JOIN kartu_keluarga ON detail_kk.no_kk = kartu_keluarga.no_kk INNER JOIN ktp ON detail_kk.nik = ktp.nik",
+    "SELECT D.*,K.nama_lengkap AS nama_ayah, I.nama_lengkap AS nama_ibu FROM detail_kk AS D LEFT JOIN ktp AS K ON D.ayah = K.nik LEFT JOIN ktp AS I ON D.ibu = I.nik",
     (err, rows) => {
       if (err) {
         return res.status(500).json({
